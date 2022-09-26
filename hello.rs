@@ -1,23 +1,75 @@
-// This is a comment, and is ignored by the compiler
-// You can test this code by clicking the "Run" button over there ->
-// or if you prefer to use your keyboard, you can use the "Ctrl + Enter" shortcut
+use std::fmt;
 
-// This code is editable, feel free to hack it!
-// You can always return to the original code by clicking the "Reset" button ->
+// Tuples can be used as function arguments and as return values
+fn reverse(pair: (i32, bool)) -> (bool, i32) {
+    // `let` can be used to bind the members of a tuple to variables
+    let (int_param, bool_param) = pair;
 
-// This is the main function
+    (bool_param, int_param)
+}
+
+
+// The following struct is for the activity.
+#[derive(Debug)]
+struct Matrix(f32, f32, f32, f32);
+
+
+fn transpose(mat: Matrix) -> Matrix {
+    // `let` can be used to bind the members of a tuple to variables
+    let Matrix(flt_param_0, flt_param_1, flt_param_2, flt_param_3) = mat;
+
+    Matrix(flt_param_0, flt_param_2, flt_param_1, flt_param_3)
+}
+
+impl fmt::Display for Matrix {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result{
+        write!(f,"({},{})\n({},{})", self.0, self.1, self.2, self.3)
+    }
+}
+
+
+
+
 fn main() {
-    let _immutable_binding = 1;
-    let mut mutable_binding = 1;
+    // A tuple with a bunch of different types
+    let long_tuple = (1u8, 2u16, 3u32, 4u64,
+                      -1i8, -2i16, -3i32, -4i64,
+                      0.1f32, 0.2f64,
+                      'a', true);
 
-    println!("Before mutation: {}", mutable_binding);
+    // Values can be extracted from the tuple using tuple indexing
+    println!("long tuple first value: {}", long_tuple.0);
+    println!("long tuple second value: {}", long_tuple.1);
 
-    // Ok
-    mutable_binding += 1;
+    // Tuples can be tuple members
+    let tuple_of_tuples = ((1u8, 2u16, 2u32), (4u64, -1i8), -2i16);
 
-    println!("After mutation: {}", mutable_binding);
+    // Tuples are printable
+    println!("tuple of tuples: {:?}", tuple_of_tuples);
+    
+    // But long Tuples (more than 12 elements) cannot be printed
+    // let too_long_tuple = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13);
+    // println!("too long tuple: {:?}", too_long_tuple);
+    // TODO ^ Uncomment the above 2 lines to see the compiler error
 
-    // Error!
-    _immutable_binding += 1;
-    // FIXME ^ Comment out this line
+    let pair = (1, true);
+    println!("pair is {:?}", pair);
+
+    println!("the reversed pair is {:?}", reverse(pair));
+
+    // To create one element tuples, the comma is required to tell them apart
+    // from a literal surrounded by parentheses
+    println!("one element tuple: {:?}", (5u32,));
+    println!("just an integer: {:?}", (5u32));
+
+    //tuples can be destructured to create bindings
+    let tuple = (1, "hello", 4.5, true);
+
+    let (a, b, c, d) = tuple;
+    println!("{:?}, {:?}, {:?}, {:?}", a, b, c, d);
+
+    let matrix = Matrix(1.1, 1.2, 2.1, 2.2);
+    println!("{}", matrix);
+    println!("{}", transpose(matrix));
+
 }
