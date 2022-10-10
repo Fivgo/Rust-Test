@@ -1,0 +1,9 @@
+[package]
+name = "import_test"
+version = "0.1.0"
+authors = ["Evan"]
+edition = "2021"
+
+
+[dependencies]
+inputbot = "0.5"

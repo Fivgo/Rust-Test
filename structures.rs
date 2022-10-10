@@ -1,4 +1,5 @@
 // An attribute to hide warnings for unused code.
+
 #![allow(dead_code)]
 
 #[derive(Debug)]
@@ -14,6 +15,7 @@ struct Unit;
 struct Pair(i32, f32);
 
 // A struct with two fields
+#[derive(Clone)]
 struct Point {
     x: f32,
     y: f32,
@@ -25,6 +27,19 @@ struct Rectangle {
     // corners are in space.
     top_left: Point,
     bottom_right: Point,
+}
+
+fn rect_area(rect:Rectangle) -> f32 {
+    println!("ys {:?} and {:?} = {:?}", rect.top_left.y, rect.bottom_right.y, rect.top_left.y-rect.bottom_right.y);
+    println!("xs {:?} and {:?} = {:?}", rect.top_left.x, rect.bottom_right.x, rect.top_left.x-rect.bottom_right.x);
+    ((rect.top_left.x-rect.bottom_right.x) * (rect.top_left.y-rect.bottom_right.y)).abs()
+}
+
+fn square(p: &Point, l:f32, w:f32) -> Rectangle {
+    Rectangle {
+        top_left: p.clone(),
+        bottom_right: Point {x:p.clone().x+l, y:p.clone().y+w}
+    }
 }
 
 fn main() {
@@ -72,4 +87,10 @@ fn main() {
     let Pair(integer, decimal) = pair;
 
     println!("pair contains {:?} and {:?}", integer, decimal);
+
+    println!("rect area test {:?}", rect_area(_rectangle));
+
+    //let borrowTest: &mut Point = Point{x: 4.1, y: 6.2};
+
+    println!("Square test {:?}", rect_area(square(&point, 4f32, 5f32)));
 }
